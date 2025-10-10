@@ -1,63 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Website</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashwin Shetty | Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header>
-        <h1>Hi, I'm Ashwin</h1>
-        <p>Programmer | Full Stack Developer | Tech Enthusiast</p>
-    </header>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Hi, I'm <span class="highlight">Ashwin</span></h1>
+      <p>Programmer • Full Stack Developer • Tech Enthusiast</p>
+      <a href="#projects" class="btn">View My Work</a>
+    </div>
+  </header>
 
-    <nav>
-        <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+  <nav class="navbar">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm Ashwin, a passionate developer with a love for programming and Machine Learning. My expertise includes Python, C, Flutter, Firebase, JavaScript and Tensorflow.</p>
-        <p>When I'm not coding, I enjoy reading webnovels.</p>
-        <p>Last update:27/12/2024 8:07 PM</p>
-    </section>
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="project">
-            <h3>Project 1: Precision Post</h3>
-            <p>Website to assign mail to users and notify them. Users can change the delivery time of the mail. Built on HTML and Javascript, utilizing a Firebase backend. </p>
-            <a href="https://github.com/ashwin549/Precision-Post">View on Github</a>
-            <a href="https://precisionpost.web.app">Visit the web app</a>
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <p>
+      I'm Ashwin — a developer passionate about building scalable systems and exploring the world of
+      Machine Learning. My toolkit includes <strong>Python, C, Flutter, Firebase, JavaScript, and TensorFlow</strong>.
+    </p>
+    <p>Outside of coding, I enjoy reading web novels and exploring new tech trends.</p>
+    <p class="update">Last updated: 27 Dec 2024, 8:07 PM</p>
+  </section>
+
+  <section id="projects" class="section">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Precision Post</h3>
+        <p>
+          A smart mail assignment and scheduling system with Firebase backend, allowing users to
+          manage deliveries dynamically.
+        </p>
+        <div class="links">
+          <a href="https://github.com/ashwin549/Precision-Post" target="_blank">GitHub</a>
+          <a href="https://precisionpost.web.app" target="_blank">Live Demo</a>
         </div>
-        <div class="project">
-            <h3>Project 2: Mental Health Chatbot</h3>
-            <p>Experimental chatbot that utilizes speech recognition and voice emotion analysis. Built on Python using Tensorflow.</p>
-            <a href="https://github.com/ashwin549/Voice_ml">View on Github</a>
+      </div>
+
+      <div class="project-card">
+        <h3>Mental Health Chatbot</h3>
+        <p>
+          An experimental chatbot integrating speech recognition and emotion analysis using TensorFlow.
+        </p>
+        <div class="links">
+          <a href="https://github.com/ashwin549/Voice_ml" target="_blank">GitHub</a>
         </div>
-    </section>
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+      </div>
+    </div>
+  </section>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+  <section id="contact" class="section">
+    <h2>Contact Me</h2>
+    <form class="contact-form">
+      <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <input type="email" id="email" name="email" placeholder="Your Email" required />
+      <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </section>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
-
-            <button type="submit">Send</button>
-        </form>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Ashwin Shetty. All rights reserved.</p>
-    </footer>
+  <footer>
+    <p>&copy; 2024 Ashwin Shetty. All rights reserved.</p>
+  </footer>
 </body>
 </html>
