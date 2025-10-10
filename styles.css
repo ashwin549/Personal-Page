@@ -145,45 +145,43 @@ body {
 .links a:hover {
   text-decoration: underline;
 }
-
-/* ---------- Contact ---------- */
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 500px;
-  margin: 0 auto;
+.more-projects {
+  margin-top: 30px;
+  text-align: center;
 }
 
-.contact-form input,
-.contact-form textarea {
-  background-color: #0d1117;
-  border: 1px solid #30363d;
-  color: #e6edf3;
-  padding: 12px;
-  border-radius: 8px;
-  resize: none;
-  font-size: 1rem;
+.more-projects a {
+  color: #58a6ff;
+  font-weight: 500;
+  text-decoration: none;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: #58a6ff;
-  box-shadow: 0 0 5px rgba(88, 166, 255, 0.3);
+.more-projects a:hover {
+  text-decoration: underline;
 }
 
-.contact-form button {
-  align-self: center;
-  cursor: pointer;
-}
 
 /* ---------- Footer ---------- */
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 30px 10px;
   background-color: #161b22;
   color: #9ca3af;
   font-size: 0.9rem;
-  margin-top: 40px;
+  margin-top: 60px;
+}
+
+footer .social-links {
+  margin: 10px 0 15px 0;
+}
+
+footer .social-links a {
+  color: #58a6ff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 500;
+}
+
+footer .social-links a:hover {
+  text-decoration: underline;
 }
