@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ashwin Shetty — Portfolio</title>
+  <title>Ashwin Shetty - Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -265,7 +265,7 @@
     /* ── PROJECTS ────────────────────────────────────── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -543,9 +543,13 @@
 
     /* ── REVEAL ANIMATION ────────────────────────────── */
     .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.hidden {
       opacity: 0;
       transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .reveal.visible {
       opacity: 1;
@@ -581,6 +585,8 @@
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .contact-inner { grid-template-columns: 1fr; gap: 32px; }
       .project-card.featured { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card[style*="grid-column"] { grid-column: 1 !important; grid-template-columns: 1fr !important; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
       .hero-scroll { display: none; }
     }
@@ -633,7 +639,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h6l2 3H21a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>
         View Projects
       </a>
-      <a href="/Ashwin_resume_updated.pdf" class="btn btn-outline" target="_blank">
+      <a href="/Ashwin_Shetty_Resume.pdf" class="btn btn-outline" target="_blank">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         Resume
       </a>
@@ -649,7 +655,7 @@
 
     <div class="projects-grid">
 
-      <!-- PROJECT 1 — FEATURED: Truth-Lens -->
+      <!-- PROJECT 1 - FEATURED: Truth-Lens -->
       <div class="project-card featured reveal">
         <div>
           <div class="project-number">01 / Featured</div>
@@ -701,7 +707,7 @@
           A dual-layer AI architecture that simulates emotion by separating cognition
           into a fast "unconscious" system and a slower, reflective "conscious" layer.
           The unconscious layer generates instinctive responses; the conscious layer
-          evaluates, suppresses, or amplifies them — mimicking how emotion and reason
+          evaluates, suppresses, or amplifies them - mimicking how emotion and reason
           interact in human cognition.
         </p>
         <div class="project-tech">
@@ -723,7 +729,7 @@
         <div class="project-number">03</div>
         <h3 class="project-title">LORE Benchmark</h3>
         <p class="project-desc">
-          A benchmark that evaluates how well LLMs handle real-world OCR output —
+          A benchmark that evaluates how well LLMs handle real-world OCR output -
           corrupted text, missing elements, garbled structure and all. Models are
           scored on their ability to parse noisy OCR input and produce clean,
           corrected JSON, testing a capability that matters in production but is
@@ -750,7 +756,7 @@
         <h3 class="project-title">Moon Chess</h3>
         <p class="project-desc">
           A two-player online game based on the board game played by Columbina
-          in Genshin Impact — a special variant of tic-tac-toe with its own
+          in Genshin Impact - a special variant of tic-tac-toe with its own
           ruleset. Players create a room, share a code, and play in real-time;
           Firebase handles matchmaking, game state sync, and score tracking
           across sessions.
@@ -779,7 +785,7 @@
         <p class="project-desc">
           Point your camera at any document and Docsum extracts the text via OCR
           and returns a clean summary. Built in Flutter with a Python
-          summarisation API on the backend — useful for quickly digesting printed
+          summarisation API on the backend - useful for quickly digesting printed
           reports, receipts, or handwritten notes without typing a word.
         </p>
         <div class="project-tech">
@@ -808,18 +814,17 @@
       <div class="about-text reveal reveal-delay-2">
         <p>
           I'm <strong>Ashwin Shetty</strong>, a final-year engineering student
-          graduating in 2025. I build things across the full stack — mobile apps,
+          graduating in 2025. I build things across the full stack - mobile apps,
           web platforms, machine learning systems, and the occasional AI research tool.
         </p>
         <p>
           My work ranges from practical (a camera-to-summary document tool, a
-          fake news detector) to exploratory — like a dual-layer cognitive
+          fake news detector) to exploratory - like a dual-layer cognitive
           architecture that models how emotion and reason interact in AI systems,
           or a benchmark for how well LLMs handle messy real-world OCR input.
         </p>
         <p>
-          
-          Outside of code, i like to read webnovels and stories.
+          Outside of code, I enjoy reading stories - especially webnovels.
         </p>
         <div style="margin-top:28px">
           <div style="font-size:12px;color:var(--muted)">
@@ -933,15 +938,15 @@
     <h2 class="section-title reveal reveal-delay-1">Say Hello</h2>
     <div class="contact-inner">
       <p class="contact-blurb reveal reveal-delay-2">
-        If something here caught your eye or you just want to say hi — feel free
+        If something here caught your eye or you just want to say hi - feel free
         to reach out. Always happy to talk about interesting ideas, projects,
         or anything I've built.
       </p>
       <ul class="contact-links reveal reveal-delay-3">
         <li class="contact-link-item">
-          <a href="mailto:ashwinshetty549@gmail.com" target="_blank">
+          <a href="/cdn-cgi/l/email-protection#1f7e6c776876716c777a6b6b662a2b265f78727e7673317c7072" target="_blank">
             Email me
-            <span>ashwinshetty549@gmail.com ↗</span>
+            <span><span class="__cf_email__" data-cfemail="2243514a554b4c514a4756565b17161b62454f434b4e0c414d4f">[email&#160;protected]</span> ↗</span>
           </a>
         </li>
         <li class="contact-link-item">
@@ -967,46 +972,41 @@
   </footer>
 
   <!-- ── SCROLL REVEAL + SKILL BARS JS ─────────────── -->
-  <script>
+    <script>
     function animateSkillBars(root) {
       (root || document).querySelectorAll('.skill-bar-fill').forEach(bar => {
-        setTimeout(() => { bar.style.transform = `scaleX(${bar.getAttribute('data-width')})`; }, 300);
+        setTimeout(() => { bar.style.transform = 'scaleX(' + bar.getAttribute('data-width') + ')'; }, 300);
       });
     }
 
-    function revealAll() {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-      animateSkillBars();
-    }
+    const inIframe = window.self !== window.top;
 
-    if ('IntersectionObserver' in window) {
+    if (!inIframe && 'IntersectionObserver' in window) {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('hidden'));
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
+            entry.target.classList.remove('hidden');
             entry.target.classList.add('visible');
             animateSkillBars(entry.target);
+            observer.unobserve(entry.target);
           }
         });
       }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-      // Fallback: if elements are still hidden after 1s (sandboxed iframe etc), reveal all
-      setTimeout(() => {
-        if (document.querySelectorAll('.reveal:not(.visible)').length > 0) revealAll();
-      }, 1000);
     } else {
-      revealAll();
+      animateSkillBars();
     }
 
-    // Active nav highlight
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
       navLinks.forEach(a => {
-        a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
       });
     });
   </script>
