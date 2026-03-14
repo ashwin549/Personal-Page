@@ -3,81 +3,1015 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ashwin Shetty | Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Ashwin Shetty — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0a0a0b;
+      --bg2:      #111113;
+      --bg3:      #18181c;
+      --border:   #242428;
+      --text:     #e8e8e0;
+      --muted:    #6b6b72;
+      --accent:   #e8a020;
+      --accent2:  #f0c060;
+      --code:     #7dd3b0;
+      --danger:   #e05050;
+      --radius:   4px;
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--accent); color: #000; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NOISE OVERLAY ───────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── SCROLLBAR ───────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+      opacity: 0.4;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      max-width: 900px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.35s ease forwards;
+    }
+
+    .hero-name .line2 {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-desc {
+      margin-top: 36px;
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s ease forwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.65s ease forwards;
+    }
+    .tag {
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: var(--bg2);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s ease forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.8s 1s ease forwards;
+    }
+    .hero-scroll::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* ── SECTIONS ────────────────────────────────────── */
+    section {
+      padding: 100px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 48px;
+    }
+
+    /* ── PROJECTS ────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .project-card {
+      background: var(--bg);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+      cursor: pointer;
+    }
+    .project-card:hover { background: var(--bg2); }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-number {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+    }
+
+    .project-title {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .project-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .tech-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--code);
+      letter-spacing: 0.04em;
+      border-radius: 2px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 16px;
+    }
+    .project-link {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+    .project-link:hover { color: var(--accent); }
+    .project-link svg { flex-shrink: 0; }
+
+    /* ── FEATURED PROJECT (big card) ─────────────────── */
+    .project-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      padding: 48px;
+    }
+    .project-card.featured .project-title { font-size: 32px; }
+    .project-featured-visual {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      letter-spacing: -0.05em;
+      color: var(--border);
+      font-family: var(--font-head);
+      font-weight: 800;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-featured-visual::after {
+      content: attr(data-label);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      color: rgba(232,160,32,0.06);
+      font-family: var(--font-head);
+      font-weight: 800;
+    }
+
+    /* ── ABOUT / SKILLS ──────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .skills-list {
+      list-style: none;
+    }
+    .skill-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .skill-item:first-child { border-top: 1px solid var(--border); }
+    .skill-name {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    .skill-bar-track {
+      flex: 1;
+      max-width: 120px;
+      height: 2px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .skill-bar-fill.animate { transform: scaleX(1); }
+
+    /* ── EXPERIENCE ──────────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 44px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -36px;
+      top: 6px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+
+    .timeline-date {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .timeline-role {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .timeline-org {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 600px;
+    }
+
+    /* ── CONTACT ─────────────────────────────────────── */
+    #contact {
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-blurb {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .contact-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .contact-link-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .contact-link-item:first-child a { border-top: 1px solid var(--border); }
+    .contact-link-item a:hover { color: var(--accent); }
+    .contact-link-item a span { font-size: 11px; opacity: 0.5; }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      max-width: 100%;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── REVEAL ANIMATION ────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* cursor blink */
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      #hero { padding: 100px 24px 60px; }
+      section { padding: 72px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 32px; }
+      .project-card.featured { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+      .hero-scroll { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Hi, I'm <span class="highlight">Ashwin</span></h1>
-      <p>Programmer • Full Stack Developer • Tech Enthusiast</p>
-      <a href="#projects" class="btn">View My Work</a>
-    </div>
-  </header>
 
-  <nav class="navbar">
-    <ul>
-      <li><a href="#about">About</a></li>
+  <!-- ── NAV ───────────────────────────────────────── -->
+  <nav>
+    <div class="nav-logo">Ashwin<span>.</span></div>
+    <ul class="nav-links">
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <section id="about" class="section">
-    <h2>About Me</h2>
-    <p>
-      I'm Ashwin — a developer passionate about building scalable systems and exploring the world of
-      Machine Learning. My toolkit includes <strong>Machine Learning ,Data Analysis ,Flutter ,Cloud Computing ,Amazon Web Services (AWS)</strong>.
+  <!-- ── HERO ──────────────────────────────────────── -->
+  <section id="hero" style="max-width:100%;padding-top:0">
+    <div class="hero-grid"></div>
+
+    <div class="hero-eyebrow">Engineer · Builder · MIT Manipal</div>
+
+    <h1 class="hero-name">
+      Ashwin
+      <span class="line2">Shetty<span class="cursor"></span></span>
+    </h1>
+
+    <p class="hero-desc">
+      Final-year engineering student who builds things at the intersection of
+      <strong style="color:var(--text)">machine learning, full-stack web</strong>, and
+      <strong style="color:var(--text)">mobile development</strong>.
+      This is where I put the stuff I make.
     </p>
-    <p>Outside of coding, I enjoy reading web novels and exploring new tech trends.</p>
+
+    <div class="hero-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">React</span>
+      <span class="tag">Flutter</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">Qiskit</span>
+      <span class="tag">C++</span>
+      <span class="tag">Node.js</span>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h6l2 3H21a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>
+        View Projects
+      </a>
+      <!-- ✏️ EDIT: Link to your actual resume PDF -->
+      <a href="/Ashwin_Shetty_Resume.pdf" class="btn btn-outline" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
+      </a>
+    </div>
+
+    <div class="hero-scroll">Scroll to explore</div>
   </section>
 
-  <section id="projects" class="section">
-    <h2>Projects</h2>
+  <!-- ── PROJECTS ───────────────────────────────────── -->
+  <section id="projects">
+    <div class="section-label reveal">Work</div>
+    <h2 class="section-title reveal reveal-delay-1">Selected<br>Projects</h2>
+
     <div class="projects-grid">
-      <div class="project-card">
-        <h3>TruthLens</h3>
-        <p>
-          Real-time AI-driven platform that displays live news, weather, stocks, and currency rates — while evaluating content credibility using ML-based fake news detection. Available for Android, iOS, and Web.
-        </p>
-        <div class="links">
-          <a href="https://github.com/ashwin549/Truth-Lens" target="_blank">GitHub</a>
+
+      <!-- PROJECT 1 — FEATURED: Truth-Lens -->
+      <div class="project-card featured reveal">
+        <div>
+          <div class="project-number">01 / Featured</div>
+          <h3 class="project-title">Truth-Lens</h3>
+          <p class="project-desc">
+            A Flutter app that aggregates news from reputed sources and runs each
+            article through a TensorFlow ML model to detect fake news. Keeps feeds
+            fresh via automated GitHub Actions, and also surfaces daily weather
+            and live currency exchange rates alongside the headlines.
+          </p>
+          <div class="project-tech">
+            <span class="tech-badge">Flutter</span>
+            <span class="tech-badge">Firebase</span>
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">TensorFlow</span>
+            <span class="tech-badge">GitHub Actions</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/ashwin549/Truth-Lens" class="project-link" target="_blank">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+        <div class="project-featured-visual" data-label="TL" style="font-size:13px;color:var(--muted);flex-direction:column;gap:16px;">
+          <div style="font-family:var(--font-head);font-size:64px;font-weight:800;color:rgba(232,160,32,0.12);letter-spacing:-0.05em;position:absolute;">TRUTH<br>LENS</div>
+          <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;width:80%">
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;">Article credibility score</span>
+              <span style="color:#7dd3b0;font-size:11px;">92% ✓</span>
+            </div>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;">Source reliability</span>
+              <span style="color:var(--accent);font-size:11px;">78%</span>
+            </div>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;">Sentiment bias</span>
+              <span style="color:var(--danger);font-size:11px;">flagged</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="project-card">
-        <h3>Precision Post</h3>
-        <p>
-          Smart mail assignment and scheduling system with Firebase backend, allowing users to
-          manage deliveries dynamically.
+      <!-- PROJECT 2: cognitive_model -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-number">02</div>
+        <h3 class="project-title">Cognitive Model</h3>
+        <p class="project-desc">
+          A dual-layer AI architecture that simulates emotion by separating cognition
+          into a fast "unconscious" system and a slower, reflective "conscious" layer.
+          The unconscious layer generates instinctive responses; the conscious layer
+          evaluates, suppresses, or amplifies them — mimicking how emotion and reason
+          interact in human cognition.
         </p>
-        <div class="links">
-          <a href="https://github.com/ashwin549/Precision-Post" target="_blank">GitHub</a>
+        <div class="project-tech">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">LLM</span>
+          <span class="tech-badge">Cognitive Architecture</span>
+          <span class="tech-badge">MIT License</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/ashwin549/congitive_model" class="project-link" target="_blank">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
         </div>
       </div>
 
-      <div class="project-card">
-        <h3>Mental Health Chatbot</h3>
-        <p>
-          Experimental chatbot integrating speech recognition and emotion analysis using TensorFlow.
+      <!-- PROJECT 3: lore-benchmark -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-number">03</div>
+        <h3 class="project-title">LORE Benchmark</h3>
+        <p class="project-desc">
+          A benchmark that evaluates how well LLMs handle real-world OCR output —
+          corrupted text, missing elements, garbled structure and all. Models are
+          scored on their ability to parse noisy OCR input and produce clean,
+          corrected JSON, testing a capability that matters in production but is
+          absent from standard evals.
         </p>
-        <div class="links">
-          <a href="https://github.com/ashwin549/Voice_ml" target="_blank">GitHub</a>
+        <div class="project-tech">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">LLM Evaluation</span>
+          <span class="tech-badge">OCR</span>
+          <span class="tech-badge">JSON Extraction</span>
+          <span class="tech-badge">Benchmarking</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/ashwin549/lore-benchmark" class="project-link" target="_blank">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
         </div>
       </div>
+
+      <!-- PROJECT 4: Moon Chess -->
+      <div class="project-card reveal reveal-delay-3">
+        <div class="project-number">04</div>
+        <h3 class="project-title">Moon Chess</h3>
+        <p class="project-desc">
+          A two-player online game based on the board game played by Columbina
+          in Genshin Impact — a special variant of tic-tac-toe with its own
+          ruleset. Players create a room, share a code, and play in real-time;
+          Firebase handles matchmaking, game state sync, and score tracking
+          across sessions.
+        </p>
+        <div class="project-tech">
+          <span class="tech-badge">JavaScript</span>
+          <span class="tech-badge">Firebase</span>
+          <span class="tech-badge">Realtime DB</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/ashwin549/moon_chess" class="project-link" target="_blank">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="https://moon-chess.netlify.app/" class="project-link" target="_blank">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Live Demo
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT 5: Docsum -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-number">05</div>
+        <h3 class="project-title">Docsum</h3>
+        <p class="project-desc">
+          Point your camera at any document and Docsum extracts the text via OCR
+          and returns a clean summary. Built in Flutter with a Python
+          summarisation API on the backend — useful for quickly digesting printed
+          reports, receipts, or handwritten notes without typing a word.
+        </p>
+        <div class="project-tech">
+          <span class="tech-badge">Flutter</span>
+          <span class="tech-badge">Dart</span>
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">OCR</span>
+          <span class="tech-badge">REST API</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/ashwin549/Docsum" class="project-link" target="_blank">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
     </div>
-    <div class="more-projects">
-    <p>Want to see more? <a href="https://github.com/ashwin549" target="_blank">Check out my GitHub</a> for additional projects!</p>
-  </div>
   </section>
 
-  <footer>
-    <p>Connect with me:</p>
-    <div class="social-links">
-      <a href="https://github.com/ashwin549" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/ashwin-shetty-b64598292/" target="_blank">LinkedIn</a>
-      <a href="mailto:ashwinshetty549@gmail.com">Email</a>
+  <!-- ── ABOUT ──────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-label reveal">Background</div>
+    <h2 class="section-title reveal reveal-delay-1">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text reveal reveal-delay-2">
+        <p>
+          I'm <strong>Ashwin Shetty</strong>, a final-year engineering student
+          graduating in 2025. I build things across the full stack — mobile apps,
+          web platforms, machine learning systems, and the occasional AI research tool.
+        </p>
+        <p>
+          My work ranges from practical (a camera-to-summary document tool, a
+          fake news detector) to exploratory — like a dual-layer cognitive
+          architecture that models how emotion and reason interact in AI systems,
+          or a benchmark for how well LLMs handle messy real-world OCR input.
+        </p>
+        <p>
+          <!-- ✏️ EDIT: Add something personal — hobbies, what you care about, etc. -->
+          Outside of code, [something about you].
+        </p>
+        <div style="margin-top:28px">
+          <div style="font-size:12px;color:var(--muted)">
+            <span style="color:var(--accent)">▸</span> &nbsp;
+            B.Tech Computer &amp; Communication Engineering · <span style="color:var(--text)">Manipal Institute of Technology, Manipal</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">
+            <span style="color:var(--accent)">▸</span> &nbsp;
+            CGPA: <span style="color:var(--text)">8.98 / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-3">
+        <!-- ✏️ EDIT: Adjust skill bars to your actual proficiency (the width % is set in the data-width attr) -->
+        <ul class="skills-list">
+          <li class="skill-item">
+            <span class="skill-name">Python / ML</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.9"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">React / Next.js</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.8"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Flutter / Dart</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.75"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Node.js / Express</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.75"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">TensorFlow / PyTorch</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.7"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">SQL / Databases</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.7"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Firebase / Cloud</span>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.65"></div></div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <p>&copy; 2024 Ashwin Shetty. All rights reserved.</p>
+  </section>
+
+  <!-- ── EXPERIENCE ─────────────────────────────────── -->
+  <section id="experience" style="border-top:1px solid var(--border)">
+    <div class="section-label reveal">History</div>
+    <h2 class="section-title reveal reveal-delay-1">Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">May 2025 – Aug 2025</div>
+        <div class="timeline-role">Cloud Dashboard Developer</div>
+        <div class="timeline-org">Vespertil · On-site, Manipal</div>
+        <p class="timeline-desc">
+          Built a modular cloud dashboard for managing security camera feeds and
+          analytics. Integrated AWS Amplify and S3 for authentication and secure
+          storage. Designed camera grid views and analytics features using a
+          plugin-based architecture.
+        </p>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-date">Jun 2024 – Jul 2024</div>
+        <div class="timeline-role">Data Science &amp; ML Intern</div>
+        <div class="timeline-org">Ardent Computech Pvt Ltd · Remote</div>
+        <p class="timeline-desc">
+          Worked on data analysis and visualisation for machine learning models.
+          Built a social media sentiment analysis system using a bidirectional
+          LSTM RNN.
+        </p>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-date">2022 – 2026</div>
+        <div class="timeline-role">B.Tech · Computer &amp; Communication Engineering</div>
+        <div class="timeline-org">Manipal Institute of Technology, Manipal · CGPA: 8.98 / 10</div>
+        <p class="timeline-desc">
+          Relevant coursework: Machine Learning, Data Structures &amp; Algorithms,
+          Database Systems, Communication Networks, Information Security,
+          Operating Systems, Cloud Computing.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ACHIEVEMENTS ──────────────────────────────── -->
+  <section style="border-top:1px solid var(--border)">
+    <div class="section-label reveal">Recognition</div>
+    <h2 class="section-title reveal reveal-delay-1">Achievements</h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-date">2024</div>
+        <div class="timeline-role">Manipal Achiever Scholarship</div>
+        <div class="timeline-org">Manipal Institute of Technology</div>
+        <p class="timeline-desc">
+          Awarded a ₹1,00,000 scholarship for academic excellence.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ────────────────────────────────────── -->
+  <section id="contact">
+    <div class="section-label reveal">Find me</div>
+    <h2 class="section-title reveal reveal-delay-1">Say Hello</h2>
+    <div class="contact-inner">
+      <p class="contact-blurb reveal reveal-delay-2">
+        If something here caught your eye or you just want to say hi — feel free
+        to reach out. Always happy to talk about interesting ideas, projects,
+        or anything I've built.
+      </p>
+      <ul class="contact-links reveal reveal-delay-3">
+        <!-- ✏️ EDIT: Replace with your actual email -->
+        <li class="contact-link-item">
+          <a href="mailto:ashwinshetty549@gmail.com" target="_blank">
+            Email me
+            <span>ashwinshetty549@gmail.com ↗</span>
+          </a>
+        </li>
+        <li class="contact-link-item">
+          <a href="https://github.com/ashwin549" target="_blank">
+            GitHub
+            <span>github.com/ashwin549 ↗</span>
+          </a>
+        </li>
+        <li class="contact-link-item">
+          <a href="https://linkedin.com/in/ashwin-shetty-b64598292" target="_blank">
+            LinkedIn
+            <span>linkedin.com/in/ashwin-shetty ↗</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer>
+    <span>© 2025 Ashwin Shetty</span>
+    <span>Built by hand · <a href="https://ashwin-shetty.com">ashwin-shetty.com</a></span>
   </footer>
+
+  <!-- ── SCROLL REVEAL + SKILL BARS JS ─────────────── -->
+  <script>
+    function animateSkillBars(root) {
+      (root || document).querySelectorAll('.skill-bar-fill').forEach(bar => {
+        setTimeout(() => { bar.style.transform = `scaleX(${bar.getAttribute('data-width')})`; }, 300);
+      });
+    }
+
+    function revealAll() {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      animateSkillBars();
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            animateSkillBars(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Fallback: if elements are still hidden after 1s (sandboxed iframe etc), reveal all
+      setTimeout(() => {
+        if (document.querySelectorAll('.reveal:not(.visible)').length > 0) revealAll();
+      }, 1000);
+    } else {
+      revealAll();
+    }
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
+      });
+    });
+  </script>
 </body>
 </html>
